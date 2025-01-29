@@ -1,0 +1,1 @@
+A Laravel project in which a user asks for a Rendez-Vous in distinct company services, disponibilty constraints, if it is alright the user will receive a pdf file on email in which he will have his Rendez-Vous confirmation
