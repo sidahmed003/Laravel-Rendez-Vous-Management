@@ -3,12 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
 
-Route::get('/appointment', [AppointmentController::class, 'showForm'])->name('appointment.form');
-Route::post('/appointment', [AppointmentController::class, 'store']);
+
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/appointment', [AppointmentController::class, 'showForm'])->name('appointment.form');
-Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store');
+Route::controller(AppointmentController::class)->group(function () {
+    Route::get('/appointment', 'showForm')->name('appointment.form');
+    Route::post('/appointment', 'store')->name('appointment.store');
+});

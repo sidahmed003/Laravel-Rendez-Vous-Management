@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use Illuminate\Http\Request;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 
 class AppointmentController extends Controller
 {
@@ -45,10 +46,16 @@ class AppointmentController extends Controller
     $validated['appointment_date'] = $appointmentDate;
     $validated['time_slot'] = $request->time_slot;
 
-    Appointment::create($validated);
+    // Création de la demande de rendez-vous et stockage dans une variable
+    $appointment = Appointment::create($validated);
 
-    // Retour après l'enregistrement
-    return redirect()->route('appointment.form')->with('success', 'Votre demande de rendez-vous a été enregistrée!');
+
+    // Génération du PDF avec Snappy
+    $pdf = PDF::loadView('appointment.pdf', ['appointment' => $appointment]);
+
+    // Télécharger le PDF
+    return $pdf->download('confirmation_rdv.pdf');
+
 }
 
 
